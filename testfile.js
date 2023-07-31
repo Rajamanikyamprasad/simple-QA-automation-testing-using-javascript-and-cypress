@@ -1,0 +1,45 @@
+
+//code for testing as in scenarios
+
+
+describe('Goodreads UI Automation Test', () => {
+    beforeEach(() => {
+      cy.visit('https://www.goodreads.com/');
+    });
+  
+    it('should log in, search for a book, mark it as "want to read", remove it from the list, and then log out', () => {
+      // 1. Checks Login
+
+
+      cy.get('#userSignInFormEmail').type('your_username');
+      cy.get('#user_password').type('your_password');
+      cy.get('#sign_in').click();
+  
+      // 2. It Search for a specific book title
+
+
+      const bookTitle = 'Your Specific Book Title';
+      cy.get('#sitesearch_field').type(bookTitle).type('{enter}');
+  
+      // 3. Mark the book
+
+      cy.get(`[title="Want to Read"]`).click();
+  
+      // 4. Remove book from my book list
+
+
+      cy.get(`[title="Remove from My Books"]`).click();
+  
+      // 5. Validate that the book 
+
+
+      cy.contains('removed from your Books').should('be.visible');
+  
+      // 6. Logout 
+
+      
+      cy.get('#userMenu').click();
+      cy.contains('Sign out').click();
+    });
+  });
+  
